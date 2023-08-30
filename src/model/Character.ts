@@ -1,10 +1,18 @@
+export interface CharacterFilters {
+  name: string;
+  status: CharacterStatus;
+  species: string;
+  type: string;
+  gender: CharacterGender;
+}
+
 export interface Character {
   id: string;
   name: string;
-  status: string;
+  status: CharacterStatus;
   species: string;
   type: Array<string>;
-  gender: string;
+  gender: CharacterGender;
   origin: {
     name: string;
     url: string;
@@ -18,3 +26,6 @@ export interface Character {
   url: string;
   created: string;
 }
+
+export type CharacterStatus = 'alive' | 'dead' | 'unknown';
+export type CharacterGender = 'female' | 'male' | 'genderless' | 'unknown';

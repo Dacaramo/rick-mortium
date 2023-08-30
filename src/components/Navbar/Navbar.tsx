@@ -1,62 +1,65 @@
 import { Link, Outlet } from 'react-router-dom';
-import { FC } from 'react';
-import { NAVBAR_ITEM_FONT, TITLE_FONT } from '../../constants/fonts';
-import {
-  NAVBAR_ITEM_FONT_HOVER_SIZE,
-  NAVBAR_ITEM_FONT_SIZE,
-  TITLE_FONT_SIZE,
-} from '../../constants/sizes';
-import {
-  NAVBAR_COLOR,
-  NAVBAR_ITEM_FONT_COLOR,
-  NAVBAR_ITEM_FONT_HOVER_COLOR,
-  SHADOW_COLOR,
-  TITLE_FONT_COLOR,
-} from '../../constants/colors';
+import { FC, useEffect, useRef, useState } from 'react';
+import { DROP_SHADOW_CLASSES } from '../../constants/tailwindClasses';
 
 interface Props {}
 
 const Navbar: FC<Props> = () => {
+  const [navbarHeight, setNavbarHeight] = useState<number>(0);
+
+  const navbarRef = useRef<HTMLElement | null>(null);
+
+  const navbarItemClasses =
+    'font-dhand text-xl text-amber-200 hover:text-amber-500 hover:text-2xl';
+
+  useEffect(() => {
+    if (navbarRef.current) {
+      const rect = navbarRef.current.getBoundingClientRect();
+      setNavbarHeight(rect.height);
+    }
+  }, []);
+
   return (
     <>
       <header
-        className={`w-full min-h-[50px] flex flex-row justify-start items-center drop-shadow shadow-md rounded-b-lg ${NAVBAR_COLOR} ${SHADOW_COLOR}`}
+        ref={navbarRef}
+        className={`w-full p-4 sticky top-0 z-10 flex flex-row flex-wrap justify-start items-center drop-shadow shadow-md rounded-b-lg bg-blue-800 ${DROP_SHADOW_CLASSES}`}
       >
         <Link
           to='/'
-          className={`ml-3 ${TITLE_FONT} ${TITLE_FONT_SIZE} ${TITLE_FONT_COLOR}`}
+          className={`ml-3 font-chicle text-5xl text-amber-500`}
         >
           Rick Mortium
         </Link>
         <nav className='ml-auto mr-3'>
           <Link
             to='/'
-            className={`ml-3 ${NAVBAR_ITEM_FONT} ${NAVBAR_ITEM_FONT_SIZE} ${NAVBAR_ITEM_FONT_COLOR} ${NAVBAR_ITEM_FONT_HOVER_COLOR} ${NAVBAR_ITEM_FONT_HOVER_SIZE}`}
+            className={`${navbarItemClasses}`}
           >
             Characters
           </Link>
           <Link
             to='/locations'
-            className={`ml-3 ${NAVBAR_ITEM_FONT} ${NAVBAR_ITEM_FONT_SIZE} ${NAVBAR_ITEM_FONT_COLOR} ${NAVBAR_ITEM_FONT_HOVER_COLOR} ${NAVBAR_ITEM_FONT_HOVER_SIZE}`}
+            className={`ml-3 ${navbarItemClasses}`}
           >
             Locations
           </Link>
           <Link
             to='/episodes'
-            className={`ml-3 ${NAVBAR_ITEM_FONT} ${NAVBAR_ITEM_FONT_SIZE} ${NAVBAR_ITEM_FONT_COLOR} ${NAVBAR_ITEM_FONT_HOVER_COLOR} ${NAVBAR_ITEM_FONT_HOVER_SIZE}`}
+            className={`ml-3 ${navbarItemClasses}`}
           >
             Episodes
           </Link>
           <Link
             to='/liked'
-            className={`ml-3 ${NAVBAR_ITEM_FONT} ${NAVBAR_ITEM_FONT_SIZE} ${NAVBAR_ITEM_FONT_COLOR} ${NAVBAR_ITEM_FONT_HOVER_COLOR} ${NAVBAR_ITEM_FONT_HOVER_SIZE}`}
+            className={`ml-3 ${navbarItemClasses}`}
           >
             Liked
           </Link>
         </nav>
       </header>
       <main>
-        <Outlet />
+        <Outlet context={{ navbarHeight }} />
       </main>
     </>
   );

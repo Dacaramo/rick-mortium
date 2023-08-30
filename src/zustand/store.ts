@@ -7,6 +7,12 @@ interface StoreState {
   characters: Array<Character>;
   locations: Array<Location>;
   episodes: Array<Episode>;
+  saveCharacter: (character: Character) => void;
+  saveLocation: (location: Location) => void;
+  saveEpisode: (episode: Episode) => void;
+  removeSavedCharacter: (index: number) => void;
+  removeSavedLocation: (index: number) => void;
+  removeSavedEpisode: (index: number) => void;
 }
 
 export const useStore = create<StoreState>()((set) => {

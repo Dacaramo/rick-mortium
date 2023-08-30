@@ -64,7 +64,6 @@ module.exports = {
     'no-self-compare': ['error'],
     'no-unmodified-loop-condition': ['error'],
     'no-unreachable-loop': ['error'],
-    'default-case': ['error'],
     curly: ['error'],
     eqeqeq: ['error'],
     'id-denylist': ['error', 'error', 'list', 'array', 'variable', 'function'],
@@ -169,5 +168,7 @@ module.exports = {
       },
     ],
     'react/hook-use-state': ['error'],
+    '@typescript-eslint/no-misused-promises': ['off'],
+    '@typescript-eslint/no-floating-promises': ['off'],
   },
 };
