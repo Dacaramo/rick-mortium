@@ -9,7 +9,7 @@ interface Props {
 
 const List: FC<Props> = ({ items }) => {
   return (
-    <ul className='w-full p-5 flex flex-row flex-wrap gap-2 justify-start items-center'>
+    <ul className='w-full p-5 grid grid-cols-[repeat(auto-fill,minmax(275px,1fr))] gap-5'>
       {items.map((item) => {
         return (
           <ListItem

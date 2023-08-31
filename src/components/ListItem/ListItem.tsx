@@ -84,7 +84,7 @@ const ListItem: FC<Props> = ({ item, type }) => {
 
   return (
     <li
-      className={`flex flex-col basis-[300px] flex-1 justify-start items-start rounded-xl bg-amber-500 ${DROP_SHADOW_CLASSES}`}
+      className={`flex flex-col justify-start items-start rounded-xl bg-amber-500 ${DROP_SHADOW_CLASSES}`}
     >
       {type === 'character' && (
         <img
@@ -93,7 +93,7 @@ const ListItem: FC<Props> = ({ item, type }) => {
           alt={(item as Character).name}
         />
       )}
-      <div className='p-2 w-full flex flex-row justify-between items-end'>
+      <div className='p-2 w-full h-full flex flex-row justify-between items-start'>
         <div>
           <p className='font-dhand text-xl text-stone-950'>
             <b>Name: </b> {item.name}
