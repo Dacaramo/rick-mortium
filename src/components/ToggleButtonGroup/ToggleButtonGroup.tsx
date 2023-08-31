@@ -3,7 +3,7 @@ import { FC, Dispatch, SetStateAction } from 'react';
 interface Props {
   buttons: Array<{
     text: string;
-    handleClick: () => void;
+    handleClick?: () => void;
   }>;
   selectedBtn: number;
   setSelectedBtn: Dispatch<SetStateAction<number>>;
@@ -15,7 +15,7 @@ const ToggleButtonGroup: FC<Props> = ({
   setSelectedBtn,
 }) => {
   const handleClickWrapper = (clickedIndex: number) => {
-    buttons[clickedIndex].handleClick();
+    buttons[clickedIndex].handleClick?.();
     setSelectedBtn(clickedIndex);
   };
 
