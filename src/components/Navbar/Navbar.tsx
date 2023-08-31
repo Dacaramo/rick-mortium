@@ -10,7 +10,7 @@ const Navbar: FC<Props> = () => {
   const navbarRef = useRef<HTMLElement | null>(null);
 
   const navbarItemClasses =
-    'font-dhand text-xl text-amber-200 hover:text-amber-500 hover:text-2xl';
+    'font-dhand text-xl text-amber-200 hover:text-amber-500';
 
   useEffect(() => {
     if (navbarRef.current) {

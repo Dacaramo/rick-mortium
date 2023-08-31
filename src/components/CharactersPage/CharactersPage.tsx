@@ -9,6 +9,7 @@ import {
 } from '../../constants/tailwindClasses';
 import { useOutletContext } from 'react-router-dom';
 import { useNavbar } from '../Navbar/useNavbar';
+import FiltersSection from '../FiltersSection/FiltersSection';
 
 interface Props {}
 
@@ -46,20 +47,21 @@ const CharactersPage: FC<Props> = () => {
         >
           <label
             htmlFor='characterInput'
-            className={`text-4xl text-center text-4xl text-amber-500 font-dhand`}
+            className={`mb-2 text-4xl text-center text-4xl text-amber-500 font-dhand`}
           >
             Curious about a character?
           </label>
           <input
             type='text'
             id='characterInput'
-            className={`w-full h-[35px] m-2 p-2 rounded-full ${TEXT_INPUT_CLASSES}`}
+            className={`w-full ${TEXT_INPUT_CLASSES}`}
             placeholder='Type a character name'
             value={name}
             onChange={handleNameInputChange}
           />
         </form>
       </section>
+      <FiltersSection />
       {data && <List items={data.results} />}
     </>
   );
