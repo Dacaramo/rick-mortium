@@ -66,7 +66,7 @@ module.exports = {
     'no-unreachable-loop': ['error'],
     curly: ['error'],
     eqeqeq: ['error'],
-    'id-denylist': ['error', 'error', 'list', 'array', 'variable', 'function'],
+    'id-denylist': ['error', 'list', 'array', 'variable', 'function'],
     'init-declarations': ['error', 'always'],
     'no-continue': ['error'],
     'no-else-return': ['error'],

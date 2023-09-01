@@ -14,28 +14,31 @@ interface BackendResponse<T> {
 }
 
 export const getCharacters = async (
-  filters: Partial<CharacterFilters>
+  filters: Partial<CharacterFilters>,
+  pageNumber: number
 ): Promise<BackendResponse<Character>> => {
   const axiosResponse = await axiosInstance.get('/character', {
-    params: filters,
+    params: { ...filters, page: pageNumber },
   });
   return axiosResponse.data as BackendResponse<Character>;
 };
 
 export const getLocations = async (
-  filters: LocationFilters
+  filters: LocationFilters,
+  pageNumber: number
 ): Promise<BackendResponse<Location>> => {
   const axiosResponse = await axiosInstance.get('/location', {
-    params: filters,
+    params: { ...filters, page: pageNumber },
   });
   return axiosResponse.data as BackendResponse<Location>;
 };
 
 export const getEpisodes = async (
-  filters: EpisodeFilters
+  filters: EpisodeFilters,
+  pageNumber: number
 ): Promise<BackendResponse<Episode>> => {
   const axiosResponse = await axiosInstance.get('/episode', {
-    params: filters,
+    params: { ...filters, page: pageNumber },
   });
   return axiosResponse.data as BackendResponse<Episode>;
 };

@@ -1,6 +1,6 @@
-import { FC, useState, Dispatch, SetStateAction } from 'react';
+import { FC, useState, Dispatch, SetStateAction, useEffect } from 'react';
 import List from '../List/List';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { getCharacters } from '../../axios/axiosRequestSenders';
 import {
   DROP_SHADOW_CLASSES,
@@ -8,8 +8,15 @@ import {
 } from '../../constants/tailwindClasses';
 import { useNavbar } from '../Navbar/useNavbar';
 import ToggleButtonGroup from '../ToggleButtonGroup/ToggleButtonGroup';
-import { CharacterGender, CharacterStatus } from '../../model/Character';
+import {
+  Character,
+  CharacterGender,
+  CharacterStatus,
+} from '../../model/Character';
 import { useDebouncedValue } from '../../hooks/useDebouncedValue';
+import { ClipLoader } from 'react-spinners';
+import { AMBER_500 } from '../../constants/colors';
+import { AxiosError } from 'axios';
 
 interface Props {}
 
@@ -25,24 +32,41 @@ const CharactersPage: FC<Props> = () => {
   const debouncedSpecies = useDebouncedValue(species, delay);
   const debouncedType = useDebouncedValue(type, delay);
   const { navbarHeight } = useNavbar();
-  const { data } = useQuery({
-    queryKey: [
-      'characters',
-      debouncedName,
-      status,
-      gender,
-      debouncedSpecies,
-      debouncedType,
-    ],
-    queryFn: () =>
-      getCharacters({
-        name: debouncedName === '' ? undefined : debouncedName,
+  const { data, fetchNextPage, hasNextPage, isError, isLoading, error } =
+    useInfiniteQuery({
+      queryKey: [
+        'characters',
+        debouncedName,
         status,
         gender,
-        species: debouncedSpecies === '' ? undefined : debouncedSpecies,
-        type: debouncedType === '' ? undefined : debouncedType,
-      }),
-  });
+        debouncedSpecies,
+        debouncedType,
+      ],
+      queryFn: ({ pageParam = 1 }) => {
+        return getCharacters(
+          {
+            name: debouncedName === '' ? undefined : debouncedName,
+            status,
+            gender,
+            species: debouncedSpecies === '' ? undefined : debouncedSpecies,
+            type: debouncedType === '' ? undefined : debouncedType,
+          },
+          pageParam as number
+        );
+      },
+      getNextPageParam: (lastPage, allPages) => {
+        if (!lastPage.info.next) {
+          return;
+        }
+        return allPages.length + 1;
+      },
+    });
+
+  console.log((error as AxiosError)?.response?.status);
+  const characters = data?.pages.reduce((acc: Array<Character>, current) => {
+    return [...acc, ...current.results];
+  }, []);
+  const searchCount = data?.pages[0].info.count;
 
   const bgImgHeight = 400;
   const searchSectionHeight = bgImgHeight - navbarHeight;
@@ -72,6 +96,48 @@ const CharactersPage: FC<Props> = () => {
       text: 'unknown',
     },
   ];
+  const getComponent = () => {
+    if (isLoading) {
+      return (
+        <ClipLoader
+          color={AMBER_500}
+          size={25}
+        />
+      );
+    } else if (isError) {
+      const statusCode = (error as AxiosError).response?.status;
+      switch (statusCode) {
+        case 404: {
+          return <label className={`${labelClasses}`}>Not found</label>;
+        }
+        case 500: {
+          return <label className={`${labelClasses}`}>Server error</label>;
+        }
+        default: {
+          return <label className={`${labelClasses}`}>Unknown error</label>;
+        }
+      }
+    } else {
+      return <label className={`${labelClasses}`}>{searchCount}</label>;
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollableHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      if (window.scrollY >= scrollableHeight) {
+        if (hasNextPage) {
+          fetchNextPage();
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [hasNextPage, fetchNextPage]);
 
   return (
     <>
@@ -103,7 +169,7 @@ const CharactersPage: FC<Props> = () => {
         </form>
       </section>
       <section className='mt-5 flex flex-row flex-wrap justify-around items-center'>
-        <div className='flex flex-col align-center'>
+        <div className='flex flex-col items-center'>
           <label className={`${labelClasses}`}>Status</label>
           <ToggleButtonGroup
             buttons={statusButtons}
@@ -113,7 +179,7 @@ const CharactersPage: FC<Props> = () => {
             }
           />
         </div>
-        <div className='flex flex-col align-center'>
+        <div className='flex flex-col items-center'>
           <label className={`${labelClasses}`}>Gender</label>
           <ToggleButtonGroup
             buttons={genderButtons}
@@ -123,7 +189,7 @@ const CharactersPage: FC<Props> = () => {
             }
           />
         </div>
-        <div className='flex flex-col align-center'>
+        <div className='flex flex-col items-center'>
           <label
             htmlFor='speciesInput'
             className={`${labelClasses}`}
@@ -139,7 +205,7 @@ const CharactersPage: FC<Props> = () => {
             onChange={(e) => setSpecies(e.target.value)}
           />
         </div>
-        <div className='flex flex-col align-center'>
+        <div className='flex flex-col items-center'>
           <label
             htmlFor='typeInput'
             className={`${labelClasses}`}
@@ -155,8 +221,17 @@ const CharactersPage: FC<Props> = () => {
             onChange={(e) => setType(e.target.value)}
           />
         </div>
+        <div className='flex flex-col items-center'>
+          <label className={`${labelClasses}`}>Results</label>
+          {getComponent()}
+        </div>
       </section>
-      {data && <List items={data.results} />}
+      {characters && (
+        <List
+          items={characters}
+          isLoading={isLoading}
+        />
+      )}
     </>
   );
 };
