@@ -24,7 +24,7 @@ export const getCharacters = async (
 };
 
 export const getLocations = async (
-  filters: LocationFilters,
+  filters: Partial<LocationFilters>,
   pageNumber: number
 ): Promise<BackendResponse<Location>> => {
   const axiosResponse = await axiosInstance.get('/location', {
@@ -34,7 +34,7 @@ export const getLocations = async (
 };
 
 export const getEpisodes = async (
-  filters: EpisodeFilters,
+  filters: Partial<EpisodeFilters>,
   pageNumber: number
 ): Promise<BackendResponse<Episode>> => {
   const axiosResponse = await axiosInstance.get('/episode', {

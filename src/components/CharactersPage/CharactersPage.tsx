@@ -75,14 +75,11 @@ const CharactersPage: FC<Props> = () => {
       },
     });
 
-  console.log('@@@@@isLoading in CharactersPage', isLoading);
-
   const characters =
     data?.pages.reduce((acc: Array<Character>, current) => {
       return [...acc, ...current.results];
     }, []) ?? [];
   const searchCount = data?.pages[0].info.count;
-
   const bgImgHeight = 400;
   const searchSectionHeight = bgImgHeight - navbarHeight;
   const labelClasses = 'mb-2 font-dhand text-amber-500 text-2xl text-center';
@@ -245,14 +242,14 @@ const CharactersPage: FC<Props> = () => {
         </div>
         <div className='flex flex-col items-center'>
           <label
-            htmlFor='typeInput'
+            htmlFor='characterTypeInput'
             className={`${labelClasses}`}
           >
             Type
           </label>
           <input
             type='text'
-            id='typeInput'
+            id='characterTypeInput'
             className={`${TEXT_INPUT_CLASSES}`}
             placeholder='Filter by type'
             value={type}

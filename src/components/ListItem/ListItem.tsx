@@ -16,6 +16,7 @@ interface Props {
 const ListItem: FC<Props> = ({ item, type }) => {
   const iconColor = '#e11d48';
   const iconSize = 25;
+  const randomImgUrl = `https://picsum.photos/seed/${Math.random() * 100}/600`;
 
   const [
     characters,
