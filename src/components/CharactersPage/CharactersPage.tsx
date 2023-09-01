@@ -1,28 +1,46 @@
-import { FC, useState, useEffect, ChangeEvent } from 'react';
+import { FC, useState, Dispatch, SetStateAction } from 'react';
 import List from '../List/List';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getCharacters } from '../../axios/axiosRequestSenders';
-import debounce from 'lodash/debounce';
 import {
   DROP_SHADOW_CLASSES,
   TEXT_INPUT_CLASSES,
 } from '../../constants/tailwindClasses';
 import { useNavbar } from '../Navbar/useNavbar';
 import ToggleButtonGroup from '../ToggleButtonGroup/ToggleButtonGroup';
+import { CharacterGender, CharacterStatus } from '../../model/Character';
+import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 
 interface Props {}
 
 const CharactersPage: FC<Props> = () => {
   const [name, setName] = useState<string>('');
-  const [status, setStatus] = useState<number>(-1);
-  const [gender, setGender] = useState<number>(-1);
+  const [status, setStatus] = useState<CharacterStatus | undefined>(undefined);
+  const [gender, setGender] = useState<CharacterGender | undefined>(undefined);
+  const [species, setSpecies] = useState<string>('');
+  const [type, setType] = useState<string>('');
 
+  const delay = 50;
+  const debouncedName = useDebouncedValue(name, delay);
+  const debouncedSpecies = useDebouncedValue(species, delay);
+  const debouncedType = useDebouncedValue(type, delay);
   const { navbarHeight } = useNavbar();
   const { data } = useQuery({
-    queryKey: ['characters', name],
+    queryKey: [
+      'characters',
+      debouncedName,
+      status,
+      gender,
+      debouncedSpecies,
+      debouncedType,
+    ],
     queryFn: () =>
       getCharacters({
-        name,
+        name: debouncedName === '' ? undefined : debouncedName,
+        status,
+        gender,
+        species: debouncedSpecies === '' ? undefined : debouncedSpecies,
+        type: debouncedType === '' ? undefined : debouncedType,
       }),
   });
 
@@ -55,10 +73,6 @@ const CharactersPage: FC<Props> = () => {
     },
   ];
 
-  const handleNameInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-
   return (
     <>
       <div
@@ -84,7 +98,7 @@ const CharactersPage: FC<Props> = () => {
             className={`w-full ${TEXT_INPUT_CLASSES}`}
             placeholder='Type a character name'
             value={name}
-            onChange={handleNameInputChange}
+            onChange={(e) => setName(e.target.value)}
           />
         </form>
       </section>
@@ -93,16 +107,20 @@ const CharactersPage: FC<Props> = () => {
           <label className={`${labelClasses}`}>Status</label>
           <ToggleButtonGroup
             buttons={statusButtons}
-            selectedBtn={status}
-            setSelectedBtn={setStatus}
+            selectedBtnText={status}
+            setSelectedBtnText={
+              setStatus as Dispatch<SetStateAction<string | undefined>>
+            }
           />
         </div>
         <div className='flex flex-col align-center'>
           <label className={`${labelClasses}`}>Gender</label>
           <ToggleButtonGroup
             buttons={genderButtons}
-            selectedBtn={gender}
-            setSelectedBtn={setGender}
+            selectedBtnText={gender}
+            setSelectedBtnText={
+              setGender as Dispatch<SetStateAction<string | undefined>>
+            }
           />
         </div>
         <div className='flex flex-col align-center'>
@@ -117,20 +135,24 @@ const CharactersPage: FC<Props> = () => {
             id='speciesInput'
             className={`${TEXT_INPUT_CLASSES}`}
             placeholder='Filter by species'
+            value={species}
+            onChange={(e) => setSpecies(e.target.value)}
           />
         </div>
         <div className='flex flex-col align-center'>
           <label
-            htmlFor='subspeciesInput'
+            htmlFor='typeInput'
             className={`${labelClasses}`}
           >
-            Subspecies
+            Type
           </label>
           <input
             type='text'
-            id='subspeciesInput'
+            id='typeInput'
             className={`${TEXT_INPUT_CLASSES}`}
-            placeholder='Filter by subspecies'
+            placeholder='Filter by type'
+            value={type}
+            onChange={(e) => setType(e.target.value)}
           />
         </div>
       </section>
