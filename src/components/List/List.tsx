@@ -23,10 +23,12 @@ const List: FC<Props> = ({ items, isLoading }) => {
         );
       })}
       {isLoading && (
-        <ClipLoader
-          color={AMBER_500}
-          size={50}
-        />
+        <li className='flex justify-center items-center'>
+          <ClipLoader
+            color={AMBER_500}
+            size={50}
+          />
+        </li>
       )}
     </ul>
   );

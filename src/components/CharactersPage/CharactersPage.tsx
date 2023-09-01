@@ -22,12 +22,7 @@ import {
 } from '../../model/Character';
 import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 import { ClipLoader } from 'react-spinners';
-import {
-  AMBER_500,
-  FUCHSIA_300,
-  LIME_400,
-  YELLOW_400,
-} from '../../constants/colors';
+import { AMBER_500, LIME_400 } from '../../constants/colors';
 import { AxiosError } from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
@@ -80,9 +75,12 @@ const CharactersPage: FC<Props> = () => {
       },
     });
 
-  const characters = data?.pages.reduce((acc: Array<Character>, current) => {
-    return [...acc, ...current.results];
-  }, []);
+  console.log('@@@@@isLoading in CharactersPage', isLoading);
+
+  const characters =
+    data?.pages.reduce((acc: Array<Character>, current) => {
+      return [...acc, ...current.results];
+    }, []) ?? [];
   const searchCount = data?.pages[0].info.count;
 
   const bgImgHeight = 400;
@@ -266,12 +264,10 @@ const CharactersPage: FC<Props> = () => {
           {getComponent()}
         </div>
       </section>
-      {characters && (
-        <List
-          items={characters}
-          isLoading={isLoading}
-        />
-      )}
+      <List
+        items={characters}
+        isLoading={isLoading}
+      />
       {isGoUpButtonVisible && (
         <button
           type='button'
