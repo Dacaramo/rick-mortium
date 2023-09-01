@@ -14,8 +14,8 @@ const Navbar: FC<Props> = () => {
 
   useEffect(() => {
     if (navbarRef.current) {
-      const rect = navbarRef.current.getBoundingClientRect();
-      setNavbarHeight(rect.height);
+      const navbarRect = navbarRef.current.getBoundingClientRect();
+      setNavbarHeight(navbarRect.height);
     }
   }, []);
 

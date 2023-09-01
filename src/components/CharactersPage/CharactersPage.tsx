@@ -1,4 +1,11 @@
-import { FC, useState, Dispatch, SetStateAction, useEffect } from 'react';
+import {
+  FC,
+  useState,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+} from 'react';
 import List from '../List/List';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getCharacters } from '../../axios/axiosRequestSenders';
@@ -15,8 +22,15 @@ import {
 } from '../../model/Character';
 import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 import { ClipLoader } from 'react-spinners';
-import { AMBER_500 } from '../../constants/colors';
+import {
+  AMBER_500,
+  FUCHSIA_300,
+  LIME_400,
+  YELLOW_400,
+} from '../../constants/colors';
 import { AxiosError } from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {}
 
@@ -26,6 +40,10 @@ const CharactersPage: FC<Props> = () => {
   const [gender, setGender] = useState<CharacterGender | undefined>(undefined);
   const [species, setSpecies] = useState<string>('');
   const [type, setType] = useState<string>('');
+  const [isGoUpButtonVisible, setIsGoUpButtonVisible] =
+    useState<boolean>(false);
+
+  const filtersSectionRef = useRef<HTMLElement | null>(null);
 
   const delay = 50;
   const debouncedName = useDebouncedValue(name, delay);
@@ -62,7 +80,6 @@ const CharactersPage: FC<Props> = () => {
       },
     });
 
-  console.log((error as AxiosError)?.response?.status);
   const characters = data?.pages.reduce((acc: Array<Character>, current) => {
     return [...acc, ...current.results];
   }, []);
@@ -96,6 +113,7 @@ const CharactersPage: FC<Props> = () => {
       text: 'unknown',
     },
   ];
+
   const getComponent = () => {
     if (isLoading) {
       return (
@@ -122,13 +140,32 @@ const CharactersPage: FC<Props> = () => {
     }
   };
 
+  const handleClickOnGoUp = () => {
+    document.documentElement.scrollTop = 0;
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollableHeight =
         document.documentElement.scrollHeight - window.innerHeight;
-      if (window.scrollY >= scrollableHeight) {
+      const isBottomReached = window.scrollY >= scrollableHeight;
+
+      if (isBottomReached) {
         if (hasNextPage) {
           fetchNextPage();
+        }
+      }
+
+      if (filtersSectionRef.current) {
+        const filtersSectionRect =
+          filtersSectionRef.current.getBoundingClientRect();
+        const isFiltersSectionScrolled =
+          window.scrollY >=
+          navbarHeight + searchSectionHeight + filtersSectionRect.height;
+        if (isFiltersSectionScrolled) {
+          setIsGoUpButtonVisible(true);
+        } else {
+          setIsGoUpButtonVisible(false);
         }
       }
     };
@@ -137,7 +174,7 @@ const CharactersPage: FC<Props> = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [hasNextPage, fetchNextPage]);
+  }, [hasNextPage, navbarHeight, searchSectionHeight, fetchNextPage]);
 
   return (
     <>
@@ -168,7 +205,10 @@ const CharactersPage: FC<Props> = () => {
           />
         </form>
       </section>
-      <section className='mt-5 flex flex-row flex-wrap justify-around items-center'>
+      <section
+        ref={filtersSectionRef}
+        className='mt-5 flex flex-row flex-wrap justify-around items-center'
+      >
         <div className='flex flex-col items-center'>
           <label className={`${labelClasses}`}>Status</label>
           <ToggleButtonGroup
@@ -231,6 +271,20 @@ const CharactersPage: FC<Props> = () => {
           items={characters}
           isLoading={isLoading}
         />
+      )}
+      {isGoUpButtonVisible && (
+        <button
+          type='button'
+          className={`fixed z-10 bottom-4 right-4 w-[80px] h-[80px] rounded-full bg-rose-600 border-4 border-lime-500 ${DROP_SHADOW_CLASSES}`}
+          hidden={!isGoUpButtonVisible}
+          onClick={handleClickOnGoUp}
+        >
+          <FontAwesomeIcon
+            icon={faArrowUp}
+            size='2xl'
+            color={LIME_400}
+          />
+        </button>
       )}
     </>
   );
