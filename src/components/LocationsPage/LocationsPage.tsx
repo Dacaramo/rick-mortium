@@ -1,25 +1,12 @@
-import {
-  FC,
-  useState,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-} from 'react';
+import { FC, useState, useEffect, useRef } from 'react';
 import List from '../List/List';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getCharacters, getLocations } from '../../axios/axiosRequestSenders';
+import { getLocations } from '../../axios/axiosRequestSenders';
 import {
   DROP_SHADOW_CLASSES,
   TEXT_INPUT_CLASSES,
 } from '../../constants/tailwindClasses';
 import { useNavbar } from '../Navbar/useNavbar';
-import ToggleButtonGroup from '../ToggleButtonGroup/ToggleButtonGroup';
-import {
-  Character,
-  CharacterGender,
-  CharacterStatus,
-} from '../../model/Character';
 import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 import { ClipLoader } from 'react-spinners';
 import { AMBER_500, LIME_400 } from '../../constants/colors';

@@ -9,6 +9,6 @@ export const determineListItemType = (item: Item): ItemType => {
     return 'episode';
   }
   throw Error(
-    'The item is not identify as a character, a location or an episode. Maybe the API schema for any of this items has changed?'
+    'The item is not identified as a character, a location or an episode. Maybe the API schema for any of this items has changed?'
   );
 };

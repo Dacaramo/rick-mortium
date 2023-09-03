@@ -1,6 +1,11 @@
-import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-import { axiosInstance } from './axiosInstance';
+import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import camelcaseKeys from 'camelcase-keys';
+
+const baseURL = 'https://rickandmortyapi.com/api';
+
+export const axiosInstance = axios.create({
+  baseURL,
+});
 
 /**
  * All props of the response bodies must be received in camel case format
