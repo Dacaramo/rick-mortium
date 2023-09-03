@@ -11,9 +11,11 @@ import HollowHearthIcon from '../HollowHearthIcon/HollowHearthIcon';
 interface Props {
   item: Item;
   type: ItemType;
+  width?: number;
+  height?: number;
 }
 
-const ListItem: FC<Props> = ({ item, type }) => {
+const ListItem: FC<Props> = ({ item, type, width, height }) => {
   const iconColor = '#e11d48';
   const iconSize = 25;
   const randomImgUrl = `https://picsum.photos/seed/${Math.random() * 100}/600`;
@@ -85,6 +87,12 @@ const ListItem: FC<Props> = ({ item, type }) => {
 
   return (
     <li
+      style={{
+        minWidth: width,
+        maxWidth: width,
+        minHeight: height,
+        maxHeight: height,
+      }}
       className={`flex flex-col justify-start items-start rounded-xl bg-amber-500 ${DROP_SHADOW_CLASSES}`}
     >
       {type === 'character' && (
