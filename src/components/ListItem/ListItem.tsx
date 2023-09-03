@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, MouseEvent as ReactMouseEvent } from 'react';
 import { Character } from '../../model/Character';
 import { Location } from '../../model/Location';
 import { Episode } from '../../model/Episode';
@@ -7,6 +7,7 @@ import { DROP_SHADOW_CLASSES } from '../../constants/tailwindClasses';
 import { useStore } from '../../zustand/store';
 import FilledHearthIcon from '../FilledHearthIcon/FilledHearthIcon';
 import HollowHearthIcon from '../HollowHearthIcon/HollowHearthIcon';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   item: Item;
@@ -43,8 +44,11 @@ const ListItem: FC<Props> = ({ item, type, width, height }) => {
       state.removeSavedEpisode,
     ];
   });
+  const navigate = useNavigate();
 
-  const handleClickOnHearth = () => {
+  const handleClickOnHearth = (e: ReactMouseEvent) => {
+    e.stopPropagation();
+
     switch (type) {
       case 'character':
         {
@@ -85,6 +89,15 @@ const ListItem: FC<Props> = ({ item, type, width, height }) => {
     }
   };
 
+  const handleClickOnListItem = () => {
+    navigate(`/items/${item.id}`, {
+      state: {
+        item,
+        type,
+      },
+    });
+  };
+
   return (
     <li
       style={{
@@ -93,7 +106,8 @@ const ListItem: FC<Props> = ({ item, type, width, height }) => {
         minHeight: height,
         maxHeight: height,
       }}
-      className={`flex flex-col justify-start items-start rounded-xl bg-amber-500 ${DROP_SHADOW_CLASSES}`}
+      className={`flex flex-col justify-start items-start rounded-xl bg-amber-500 cursor-pointer ${DROP_SHADOW_CLASSES}`}
+      onClick={handleClickOnListItem}
     >
       {type === 'character' && (
         <img

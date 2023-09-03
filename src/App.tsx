@@ -11,6 +11,8 @@ import CharactersPage from './components/CharactersPage/CharactersPage.tsx';
 import LocationsPage from './components/LocationsPage/LocationsPage.tsx';
 import EpisodesPage from './components/EpisodesPage/EpisodesPage.tsx';
 import SavedPage from './components/LikedPage/LikedPage.tsx';
+import ErrorPage from './components/ErrorPage/ErrorPage.tsx';
+import ItemPage from './components/ItemPage/ItemPage.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +35,14 @@ const router = createBrowserRouter(
       <Route
         path='/liked'
         element={<SavedPage />}
+      />
+      <Route
+        path='/items/:key'
+        element={<ItemPage />}
+      />
+      <Route
+        path='/*'
+        element={<ErrorPage />}
       />
     </Route>
   )
