@@ -89,7 +89,7 @@ const ListItem: FC<Props> = ({ item, type, width, height }) => {
   };
 
   const handleClickOnListItem = () => {
-    navigate(`/items/${item.id}`, {
+    navigate(`/rick-mortium/items/${item.id}`, {
       state: {
         item,
         type,

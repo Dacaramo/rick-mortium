@@ -18,10 +18,10 @@ const CharacterPage: FC<Props> = () => {
   const pClasses = 'font-dhand text-3xl text-stone-950';
 
   return (
-    <section className='p-5 flex flex-row justify-start items-center bg-amber-500'>
+    <section className='p-5 flex flex-row flex-wrap gap-5 justify-start items-center bg-amber-500'>
       {state.type === 'character' && (
         <img
-          className='mr-5 rounded-xl'
+          className='rounded-xl'
           src={(state.item as Character).image}
         />
       )}

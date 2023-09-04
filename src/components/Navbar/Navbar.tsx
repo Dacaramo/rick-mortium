@@ -38,32 +38,32 @@ const Navbar: FC<Props> = () => {
         className={`w-full p-4 sticky top-0 z-10 flex flex-row flex-wrap justify-start items-center drop-shadow shadow-md rounded-b-lg bg-blue-800 ${DROP_SHADOW_CLASSES}`}
       >
         <Link
-          to='/'
+          to='/rick-mortium'
           className={`ml-3 font-chicle text-5xl text-amber-500`}
         >
           Rick Mortium
         </Link>
         <nav className='ml-auto mr-3'>
           <Link
-            to='/'
+            to='/rick-mortium'
             className={`${navbarItemClasses}`}
           >
             Characters
           </Link>
           <Link
-            to='/locations'
+            to='/rick-mortium/locations'
             className={`ml-3 ${navbarItemClasses}`}
           >
             Locations
           </Link>
           <Link
-            to='/episodes'
+            to='/rick-mortium/episodes'
             className={`ml-3 ${navbarItemClasses}`}
           >
             Episodes
           </Link>
           <Link
-            to='/liked'
+            to='/rick-mortium/liked'
             className={`ml-3 ${navbarItemClasses}`}
           >
             Liked
