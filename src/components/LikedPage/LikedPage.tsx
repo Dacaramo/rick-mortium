@@ -5,22 +5,8 @@ import { useStore } from '../../zustand/store';
 interface Props {}
 
 const SavedPage: FC<Props> = () => {
-  const [
-    characters,
-    locations,
-    episodes,
-    removeSavedCharacter,
-    removeSavedLocation,
-    removeSavedEpisode,
-  ] = useStore((state) => {
-    return [
-      state.characters,
-      state.locations,
-      state.episodes,
-      state.removeSavedCharacter,
-      state.removeSavedLocation,
-      state.removeSavedEpisode,
-    ];
+  const [characters, locations, episodes] = useStore((state) => {
+    return [state.characters, state.locations, state.episodes];
   });
 
   const savedItemWidth = 275;

@@ -17,7 +17,7 @@ import ItemPage from './components/ItemPage/ItemPage.tsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route
-      path='/'
+      path='/rick-mortium'
       element={<Navbar />}
     >
       <Route
@@ -25,23 +25,23 @@ const router = createBrowserRouter(
         element={<CharactersPage />}
       />
       <Route
-        path='/locations'
+        path='/rick-mortium/locations'
         element={<LocationsPage />}
       />
       <Route
-        path='/episodes'
+        path='/rick-mortium/episodes'
         element={<EpisodesPage />}
       />
       <Route
-        path='/liked'
+        path='/rick-mortium/liked'
         element={<SavedPage />}
       />
       <Route
-        path='/items/:key'
+        path='/rick-mortium/items/:key'
         element={<ItemPage />}
       />
       <Route
-        path='/*'
+        path='/rick-mortium/*'
         element={<ErrorPage />}
       />
     </Route>
