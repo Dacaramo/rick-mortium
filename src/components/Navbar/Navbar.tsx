@@ -13,10 +13,22 @@ const Navbar: FC<Props> = () => {
     'font-dhand text-xl text-amber-200 hover:text-amber-500';
 
   useEffect(() => {
-    if (navbarRef.current) {
-      const navbarRect = navbarRef.current.getBoundingClientRect();
-      setNavbarHeight(navbarRect.height);
+    const navbarElement = navbarRef.current;
+
+    if (!navbarElement) {
+      return;
     }
+
+    const observer = new ResizeObserver(() => {
+      const navbarRect = navbarElement.getBoundingClientRect();
+      setNavbarHeight(navbarRect.height);
+    });
+
+    observer.observe(navbarElement);
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   return (

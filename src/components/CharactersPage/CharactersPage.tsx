@@ -175,11 +175,11 @@ const CharactersPage: FC<Props> = () => {
     <>
       <div
         style={{ height: bgImgHeight }}
-        className={`w-full absolute top-0 -z-10 bg-[url('/charactersPageImg.jpg')] bg-contain`}
+        className={`w-full absolute top-0 -z-10 bg-[url('/charactersPageImg.jpg')] bg-contain max-[542px]: ${DROP_SHADOW_CLASSES}`}
       />
       <section
         style={{ height: searchSectionHeight }}
-        className={`w-full z-0 flex justify-center items-center ${DROP_SHADOW_CLASSES}`}
+        className={`w-full z-0 flex justify-center items-center`}
       >
         <form
           className={`p-5 flex flex-col justify-center items-center rounded-xl drop-shadow shadow-md bg-blue-800`}
@@ -202,7 +202,7 @@ const CharactersPage: FC<Props> = () => {
       </section>
       <section
         ref={filtersSectionRef}
-        className='mt-5 flex flex-row flex-wrap justify-around items-center'
+        className='mt-5 flex flex-row flex-wrap justify-around items-center max-[320px]:flex-col max-[320px]:justify-center max-[320px]:items-center max-[320px]:gap-2'
       >
         <div className='flex flex-col items-center'>
           <label className={`${labelClasses}`}>Status</label>
