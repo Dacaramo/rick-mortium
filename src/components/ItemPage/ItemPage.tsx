@@ -42,7 +42,7 @@ const CharacterPage: FC<Props> = () => {
             </p>
             <p className={`${pClasses}`}>
               <b>Type: </b>
-              {(state.item as Character).type}
+              {(state.item as Character).type || 'N/A'}
             </p>
             <p className={`${pClasses}`}>
               <b>Gender: </b>
