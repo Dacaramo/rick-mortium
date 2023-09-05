@@ -1,5 +1,6 @@
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import camelcaseKeys from 'camelcase-keys';
+import snakecaseKeys from 'snakecase-keys';
 
 const baseURL = 'https://rickandmortyapi.com/api';
 
@@ -27,18 +28,12 @@ axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig<unknown>) => {
     const params = config.params as Record<string, unknown>;
     if (params) {
-      config.params = Object.keys(params).reduce(
-        (acc: Record<string, unknown>, key: string) => {
-          acc[key] = params[key];
-          return acc;
-        },
-        {}
-      );
+      config.params = snakecaseKeys(params);
     }
 
     const body = config.data as Record<string, unknown>;
     if (body) {
-      config.data = camelcaseKeys(body, { deep: true });
+      config.data = snakecaseKeys(body, { deep: true });
     }
 
     return config;
