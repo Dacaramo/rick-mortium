@@ -1,31 +1,32 @@
 import {
-  FC,
-  useState,
   Dispatch,
+  FC,
   SetStateAction,
   useEffect,
   useRef,
+  useState,
 } from 'react';
-import List from '../List/List';
+import { ClipLoader } from 'react-spinners';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+
 import { getCharacters } from '../../axios/axiosRequestSenders';
+import { AMBER_500, LIME_400 } from '../../constants/colors';
 import {
   DROP_SHADOW_CLASSES,
   TEXT_INPUT_CLASSES,
 } from '../../constants/tailwindClasses';
-import { useNavbar } from '../Navbar/useNavbar';
-import ToggleButtonGroup from '../ToggleButtonGroup/ToggleButtonGroup';
+import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 import {
   Character,
   CharacterGender,
   CharacterStatus,
 } from '../../model/Character';
-import { useDebouncedValue } from '../../hooks/useDebouncedValue';
-import { ClipLoader } from 'react-spinners';
-import { AMBER_500, LIME_400 } from '../../constants/colors';
-import { AxiosError } from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import List from '../List/List';
+import { useNavbar } from '../Navbar/useNavbar';
+import ToggleButtonGroup from '../ToggleButtonGroup/ToggleButtonGroup';
 
 interface Props {}
 

@@ -1,5 +1,6 @@
-import { Link, Outlet } from 'react-router-dom';
 import { FC, useEffect, useRef, useState } from 'react';
+import { Link, Outlet } from 'react-router-dom';
+
 import { DROP_SHADOW_CLASSES } from '../../constants/tailwindClasses';
 
 interface Props {}

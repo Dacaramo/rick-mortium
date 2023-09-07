@@ -1,6 +1,7 @@
 import { Character, CharacterFilters } from '../model/Character';
 import { Episode, EpisodeFilters } from '../model/Episode';
 import { Location, LocationFilters } from '../model/Location';
+
 import { axiosInstance } from './axiosConfig';
 
 interface BackendResponse<T> {

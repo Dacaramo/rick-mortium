@@ -1,7 +1,8 @@
+import { create } from 'zustand';
+
 import { Character } from '../model/Character';
 import { Episode } from '../model/Episode';
 import { Location } from '../model/Location';
-import { create } from 'zustand';
 
 interface StoreState {
   characters: Array<Character>;

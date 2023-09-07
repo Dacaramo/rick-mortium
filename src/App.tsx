@@ -1,18 +1,20 @@
-import './App.css';
+import { FC } from 'react';
 import {
-  Route,
-  RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
+  Route,
+  RouterProvider,
 } from 'react-router-dom';
-import { FC } from 'react';
-import Navbar from './components/Navbar/Navbar.tsx';
+
 import CharactersPage from './components/CharactersPage/CharactersPage.tsx';
-import LocationsPage from './components/LocationsPage/LocationsPage.tsx';
 import EpisodesPage from './components/EpisodesPage/EpisodesPage.tsx';
-import SavedPage from './components/LikedPage/LikedPage.tsx';
 import ErrorPage from './components/ErrorPage/ErrorPage.tsx';
 import ItemPage from './components/ItemPage/ItemPage.tsx';
+import SavedPage from './components/LikedPage/LikedPage.tsx';
+import LocationsPage from './components/LocationsPage/LocationsPage.tsx';
+import Navbar from './components/Navbar/Navbar.tsx';
+
+import './App.css';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

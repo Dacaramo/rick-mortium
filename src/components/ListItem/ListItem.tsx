@@ -1,13 +1,14 @@
 import { FC, MouseEvent as ReactMouseEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { DROP_SHADOW_CLASSES } from '../../constants/tailwindClasses';
 import { Character } from '../../model/Character';
-import { Location } from '../../model/Location';
 import { Episode } from '../../model/Episode';
 import { Item, ItemType } from '../../model/Item';
-import { DROP_SHADOW_CLASSES } from '../../constants/tailwindClasses';
+import { Location } from '../../model/Location';
 import { useStore } from '../../zustand/store';
 import FilledHearthIcon from '../FilledHearthIcon/FilledHearthIcon';
 import HollowHearthIcon from '../HollowHearthIcon/HollowHearthIcon';
-import { useNavigate } from 'react-router-dom';
 
 interface Props {
   item: Item;

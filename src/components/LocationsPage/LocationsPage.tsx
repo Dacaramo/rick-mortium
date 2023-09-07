@@ -1,19 +1,20 @@
-import { FC, useState, useEffect, useRef } from 'react';
-import List from '../List/List';
+import { FC, useEffect, useRef, useState } from 'react';
+import { ClipLoader } from 'react-spinners';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+
 import { getLocations } from '../../axios/axiosRequestSenders';
+import { AMBER_500, LIME_400 } from '../../constants/colors';
 import {
   DROP_SHADOW_CLASSES,
   TEXT_INPUT_CLASSES,
 } from '../../constants/tailwindClasses';
-import { useNavbar } from '../Navbar/useNavbar';
 import { useDebouncedValue } from '../../hooks/useDebouncedValue';
-import { ClipLoader } from 'react-spinners';
-import { AMBER_500, LIME_400 } from '../../constants/colors';
-import { AxiosError } from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { Location } from '../../model/Location';
+import List from '../List/List';
+import { useNavbar } from '../Navbar/useNavbar';
 
 interface Props {}
 
