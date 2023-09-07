@@ -5,16 +5,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { getEpisodes } from '../../axios/axiosRequestSenders';
-import { AMBER_500, LIME_400 } from '../../constants/colors';
+import { getEpisodes } from '../../../axios/axiosRequestSenders';
+import { AMBER_500, LIME_400 } from '../../../constants/colors';
 import {
   DROP_SHADOW_CLASSES,
   TEXT_INPUT_CLASSES,
-} from '../../constants/tailwindClasses';
-import { useDebouncedValue } from '../../hooks/useDebouncedValue';
-import { Episode } from '../../model/Episode';
-import List from '../List/List';
-import { useNavbar } from '../Navbar/useNavbar';
+} from '../../../constants/tailwindClasses';
+import { useDebouncedValue } from '../../../hooks/useDebouncedValue';
+import { Episode } from '../../../model/Episode';
+import List from '../../List/List';
+import { useNavbar } from '../../Root/useNavbar';
 
 interface Props {}
 

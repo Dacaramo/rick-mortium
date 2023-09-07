@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
-import { useStore } from '../../zustand/store';
-import ListItem from '../ListItem/ListItem';
+import { useStore } from '../../../zustand/store';
+import ListItem from '../../List/ListItem/ListItem';
 
 interface Props {}
 

@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { Character } from '../../model/Character';
-import { Episode } from '../../model/Episode';
-import { Item, ItemType } from '../../model/Item';
-import { Location } from '../../model/Location';
+import { Character } from '../../../model/Character';
+import { Episode } from '../../../model/Episode';
+import { Item, ItemType } from '../../../model/Item';
+import { Location } from '../../../model/Location';
 
 interface LocationState {
   item: Item;

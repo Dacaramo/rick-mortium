@@ -6,13 +6,13 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 
-import CharactersPage from './components/CharactersPage/CharactersPage.tsx';
-import EpisodesPage from './components/EpisodesPage/EpisodesPage.tsx';
-import ErrorPage from './components/ErrorPage/ErrorPage.tsx';
-import ItemPage from './components/ItemPage/ItemPage.tsx';
-import SavedPage from './components/LikedPage/LikedPage.tsx';
-import LocationsPage from './components/LocationsPage/LocationsPage.tsx';
-import Navbar from './components/Navbar/Navbar.tsx';
+import CharactersPage from './components/pages/CharactersPage/CharactersPage.tsx';
+import EpisodesPage from './components/pages/EpisodesPage/EpisodesPage.tsx';
+import ErrorPage from './components/pages/ErrorPage/ErrorPage.tsx';
+import ItemPage from './components/pages/ItemPage/ItemPage.tsx';
+import SavedPage from './components/pages/LikedPage/LikedPage.tsx';
+import LocationsPage from './components/pages/LocationsPage/LocationsPage.tsx';
+import Navbar from './components/Root/Root.tsx';
 
 import './App.css';
 
