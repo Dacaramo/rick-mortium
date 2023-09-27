@@ -133,6 +133,7 @@ const EpisodesPage: FC<Props> = () => {
       >
         <form
           className={`p-5 flex flex-col justify-center items-center rounded-xl drop-shadow shadow-md bg-blue-800`}
+          onSubmit={(e) => e.preventDefault()}
         >
           <label
             htmlFor='episodeInput'
