@@ -141,7 +141,7 @@ const LocationsPage: FC<Props> = () => {
         >
           <label
             htmlFor='locationInput'
-            className={`mb-2 text-4xl text-center text-4xl text-amber-500 font-dhand`}
+            className={`mb-2 text-4xl text-center text-amber-500 font-dhand`}
           >
             Curious about a location?
           </label>

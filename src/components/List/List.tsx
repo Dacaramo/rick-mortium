@@ -4,6 +4,7 @@ import { ClipLoader } from 'react-spinners';
 import { AMBER_500 } from '../../constants/colors';
 import { Item } from '../../model/Item';
 import { determineListItemType } from '../../utils/modelUtils';
+
 import ListItem from './ListItem/ListItem';
 
 interface Props {
