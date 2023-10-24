@@ -40,6 +40,7 @@ const CharactersPage: FC<Props> = () => {
     useState<boolean>(false);
 
   const filtersSectionRef = useRef<HTMLElement | null>(null);
+  const bottomElementRef = useRef<HTMLDivElement | null>(null);
 
   const delay = 50;
   const debouncedName = useDebouncedValue(name, delay);
@@ -142,16 +143,6 @@ const CharactersPage: FC<Props> = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollableHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const isBottomReached = window.scrollY >= scrollableHeight;
-
-      if (isBottomReached) {
-        if (hasNextPage) {
-          fetchNextPage();
-        }
-      }
-
       if (filtersSectionRef.current) {
         const filtersSectionRect =
           filtersSectionRef.current.getBoundingClientRect();
@@ -170,7 +161,24 @@ const CharactersPage: FC<Props> = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [hasNextPage, navbarHeight, searchSectionHeight, fetchNextPage]);
+  }, [navbarHeight, searchSectionHeight]);
+
+  useEffect(() => {
+    if (!bottomElementRef.current) {
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      const bottomElementEntry = entries[0];
+      if (bottomElementEntry.isIntersecting) {
+        if (hasNextPage) {
+          fetchNextPage();
+        }
+      }
+    });
+
+    observer.observe(bottomElementRef.current);
+  }, [hasNextPage, fetchNextPage]);
 
   return (
     <>
@@ -266,6 +274,10 @@ const CharactersPage: FC<Props> = () => {
       <List
         items={characters}
         isLoading={isLoading}
+      />
+      <div
+        className='w-[100%] h-[25px]'
+        ref={bottomElementRef}
       />
       {isGoUpButtonVisible && (
         <button
